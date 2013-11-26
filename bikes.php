@@ -45,7 +45,7 @@ class Station implements JsonSerializable {
     function Station ($values) 
     {
         foreach ($values as $k=>$v)
-            $this->data[$k] = $v;
+            $this->data[$k] = trim($v);
     }
 
     function __get($k) {
@@ -57,7 +57,7 @@ class Station implements JsonSerializable {
     }
 
 	public function jsonSerialize() {
-        return [ $this->data ];
+        return $this->data;
     }
 }
 
