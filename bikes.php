@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 
 $lat = $_REQUEST['lat'];
-$long = $_REQUEST['long'];
+$long = $_REQUEST['lng'];
 $count = 5;
 
 $file = "data/livecyclehireupdates.xml";
@@ -10,7 +10,7 @@ $file = "data/livecyclehireupdates.xml";
 if (!file_exists($file)) {
 	Header("HTTP/1.0 503 Service Unavailable");
 	echo json_encode(array(
-		'error' => "Data currently not available.";
+		'error' => "Data currently not available.",
 	));
 	return;
 }
@@ -18,7 +18,7 @@ if (!file_exists($file)) {
 if (distance($lat, $long, 51.511214, -0.119824) > 50000) {
 	Header("HTTP/1.0 400 Bad Request");
 	echo json_encode(array(
-		'error' => "Lat/Lng too far out of london.";
+		'error' => "Lat/Lng too far out of london.",
 	));
 	return;
 }
@@ -115,7 +115,7 @@ function closest($lat, $long, $data, $count = 3) {
 } 
 
 
-$db = readDatabase("livecyclehireupdates.xml");
+$db = readDatabase($file);
 $result = array();
 
 foreach (closest($lat, $long, $db, $count) as $k=>$v) {
@@ -125,6 +125,10 @@ foreach (closest($lat, $long, $db, $count) as $k=>$v) {
 		'name' => "{$station->name} ({$station->nbBikes} of {$station->nbDocks} Bikes)",
 		'station' => $station
 	);
+}
+
+if (count($result) == 0) {
+    $result['error'] = "No stations found";
 }
 
 echo json_encode($result);
