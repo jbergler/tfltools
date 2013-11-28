@@ -3,6 +3,10 @@ header('Content-Type: application/json');
 
 $lat = $_REQUEST['lat'];
 $long = $_REQUEST['lng'];
+
+if (!$lat) $lat = 51.517633;
+if (!$long) $long = -0.141718;
+
 $count = 5;
 
 $file = "data/livecyclehireupdates.xml";
@@ -112,7 +116,15 @@ function closest($lat, $long, $data, $count = 3) {
 
 	asort($distances);
 	return array_slice($distances, 0, $count, true);
-} 
+}
+
+function bearing($lat1, $lon1, $lat2, $lon2) {
+    $bearing = (rad2deg(atan2(sin(deg2rad($lon2) - deg2rad($lon1)) * cos(deg2rad($lat2)), cos(deg2rad($lat1)) * sin(deg2rad($lat2)) - sin(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($lon2) - deg2rad($lon1)))) + 360) % 360;
+    $tmp = round($bearing / 22.5);
+    $rose = array(0=>"N",1=>"NNE",2=>"NE",3=>"ENE",4=>"E",5=>"ESE",6=>"SE",7=>"SSE",8=>"S",9=>"SSW",10=>"SW",11=>"WSW",12=>"W",13=>"WNW",14=>"NW",15=>"NNW");
+    return $rose[$tmp];
+}
+
 
 
 $db = readDatabase($file);
@@ -120,8 +132,9 @@ $result = array();
 
 foreach (closest($lat, $long, $db, $count) as $k=>$v) {
 	$station = $db[$k];
+    $bearing = bearing($lat, $long, $station->lat, $station->long);
 	$result[] = array(
-		'distance'=> $v,
+		'distance'=> "{$v}m {$bearing}",
 		'name' => "{$station->name} ({$station->nbBikes} of {$station->nbDocks} Bikes)",
 		'station' => $station
 	);
