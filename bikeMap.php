@@ -6,8 +6,8 @@ $key = "AIzaSyAXX06QD5CdYhhL0SBcuTxqhaMzTXm_FwQ";
 
 // Defaults
 $count = 3;
-$userLat = 51.517633;
-$userLng = -0.141718;
+$userLat = 51.539099;
+$userLng = -0.141728;
 
 if (isset($_REQUEST['lat']) && isset($_REQUEST['lng'])) {
 	$userLat = $_REQUEST['lat'];
@@ -27,6 +27,7 @@ $result = array();
 
 if (isset($_REQUEST['stationId']) && isset($db[$_REQUEST['stationId']])) {
 	$station = $db[$_REQUEST['stationId']];
+
 	$result['B'] = array('lat' => $station->lat, 'lng' => $station->long);
 }
 else {

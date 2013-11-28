@@ -91,7 +91,8 @@ function distance($lat1, $lon1, $lat2, $lon2)
     $dist = acos($dist);
     $dist = rad2deg($dist);
     $miles = $dist * 60 * 1.1515;
-    return abs(round($miles * 1.609344 * 1000));
+    $meters = abs(round($miles * 1.609344 * 1000));
+    return max(5, $meters);
 }
 
 function closest($lat, $long, $data, $count = 3) {
