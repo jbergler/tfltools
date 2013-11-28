@@ -95,9 +95,9 @@ function distance($lat1, $lon1, $lat2, $lon2)
     return max(5, $meters);
 }
 
-function closest($lat, $long, $data, $count = 3) {
-	$distances = array_map(function($item) use($lat, $long) {
-	    return distance($item->lat, $item->long, $lat, $long);
+function closest($lat, $lng, $data, $count = 3) {
+	$distances = array_map(function($item) use($lat, $lng) {
+	    return distance($item->lat, $item->lng, $lat, $lng);
 	}, $data);
 
 	asort($distances);

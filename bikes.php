@@ -3,10 +3,10 @@ require_once('_bikes.php');
 header('Content-Type: application/json');
 
 $lat = $_REQUEST['lat'];
-$long = $_REQUEST['lng'];
+$lng = $_REQUEST['lng'];
 
 if (!$lat) $lat = 51.517633;
-if (!$long) $long = -0.141718;
+if (!$lng) $lng = -0.141718;
 
 $count = 5;
 
@@ -24,9 +24,9 @@ if (distance($lat, $lng, 51.511214, -0.119824) > 50000) {
 $db = readDatabase($file);
 $result = array();
 
-foreach (closest($lat, $long, $db, $count) as $k=>$v) {
+foreach (closest($lat, $lng, $db, $count) as $k=>$v) {
 	$station = $db[$k];
-    $bearing = bearing($lat, $long, $station->lat, $station->long);
+    $bearing = bearing($lat, $lng, $station->lat, $station->lng);
     $available = ($station->installed == "true") &&
                  ($station->locked == "false") &&
                  ($station->removalDate == "");
