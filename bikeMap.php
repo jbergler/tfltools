@@ -5,7 +5,8 @@ $url = "http://maps.googleapis.com/maps/api/staticmap";
 $key = "AIzaSyAXX06QD5CdYhhL0SBcuTxqhaMzTXm_FwQ";
 
 // Defaults
-$count = 3;
+$count = 2;
+$maxDistance = 200;
 $userLat = 51.539099;
 $userLng = -0.141728;
 
@@ -31,7 +32,6 @@ if (isset($_REQUEST['stationId']) && isset($db[$_REQUEST['stationId']])) {
 	$result['B'] = array('lat' => $station->lat, 'lng' => $station->long);
 }
 else {
-	$maxDistance = 250;
 	$num = 1;
 	foreach (closest($userLat, $userLng, $db, $count) as $k=>$v) {
 		$station = $db[$k];
