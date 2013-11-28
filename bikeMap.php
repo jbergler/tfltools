@@ -81,5 +81,6 @@ unlink($tmp);
 unlink($tmpIn);
 unlink($tmpOut);
 
-Header("Content-type: application/octet-stream");
-echo $pbi;
+Header("Content-type: text/plain");
+
+echo base64_encode($pbi);
