@@ -133,10 +133,17 @@ $result = array();
 foreach (closest($lat, $long, $db, $count) as $k=>$v) {
 	$station = $db[$k];
     $bearing = bearing($lat, $long, $station->lat, $station->long);
+    $available = ($station->installed == "true") &&
+                 ($station->locked == "false") &&
+                 ($station->removalDate == "");
 	$result[] = array(
-		'distance'=> "{$v}m {$bearing}",
-		'name' => "{$station->name} ({$station->nbBikes} of {$station->nbDocks} Bikes)",
-		'station' => $station
+        'id' => $station->id,
+		'name' => $station->name,
+        'distance'=> $v,
+        'bearing' => $bearing,
+        'available' => $available,
+        'availableBikes' => $station->nbBikes,
+        'availableDocks' => $station->nbDocks
 	);
 }
 
