@@ -3,30 +3,30 @@
 $file = "data/livecyclehireupdates.xml";
 
 if (!file_exists($file)) {
-	Header("HTTP/1.0 503 Service Unavailable");
-	echo json_encode(array(
-		'error' => "Data currently not available.",
-	));
-	return;
+    Header("HTTP/1.0 503 Service Unavailable");
+    echo json_encode(array(
+        'error' => "Data currently not available.",
+    ));
+    return;
 }
 
 
 class Station implements JsonSerializable {
-	// <station>
-	// 	<id>1</id>
-	// 	<name>River Street , Clerkenwell</name>
-	// 	<terminalName>001023</terminalName>
-	// 	<lat>51.52916347</lat>
-	// 	<long>-0.109970527</long>
-	// 	<installed>true</installed>
-	// 	<locked>false</locked>
-	// 	<installDate>1278947280000</installDate>
-	// 	<removalDate/>
-	// 	<temporary>false</temporary>
-	// 	<nbBikes>13</nbBikes>
-	// 	<nbEmptyDocks>6</nbEmptyDocks>
-	// 	<nbDocks>19</nbDocks>
-	// </station>
+    // <station>
+    //  <id>1</id>
+    //  <name>River Street , Clerkenwell</name>
+    //  <terminalName>001023</terminalName>
+    //  <lat>51.52916347</lat>
+    //  <long>-0.109970527</long>
+    //  <installed>true</installed>
+    //  <locked>false</locked>
+    //  <installDate>1278947280000</installDate>
+    //  <removalDate/>
+    //  <temporary>false</temporary>
+    //  <nbBikes>13</nbBikes>
+    //  <nbEmptyDocks>6</nbEmptyDocks>
+    //  <nbDocks>19</nbDocks>
+    // </station>
 
     private $data = array();
 
@@ -37,14 +37,14 @@ class Station implements JsonSerializable {
     }
 
     function __get($k) {
-    	return $this->data[$k];
+        return $this->data[$k];
     }
 
     function __set($k, $v) {
-    	return $this->data[$k] = $v;
+        return $this->data[$k] = $v;
     }
 
-	public function jsonSerialize() {
+    public function jsonSerialize() {
         return $this->data;
     }
 }
@@ -96,12 +96,12 @@ function distance($lat1, $lon1, $lat2, $lon2)
 }
 
 function closest($lat, $lng, $data, $count = 3) {
-	$distances = array_map(function($item) use($lat, $lng) {
-	    return distance($item->lat, $item->lng, $lat, $lng);
-	}, $data);
+    $distances = array_map(function($item) use($lat, $lng) {
+        return distance($item->lat, $item->lng, $lat, $lng);
+    }, $data);
 
-	asort($distances);
-	return array_slice($distances, 0, $count, true);
+    asort($distances);
+    return array_slice($distances, 0, $count, true);
 }
 
 function bearing($lat1, $lon1, $lat2, $lon2) {
