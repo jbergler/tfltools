@@ -143,7 +143,8 @@ foreach (closest($lat, $long, $db, $count) as $k=>$v) {
         'bearing' => $bearing,
         'available' => $available,
         'availableBikes' => $station->nbBikes,
-        'availableDocks' => $station->nbDocks
+        'availableDocks' => $station->nbEmptyDocks,
+        'totalDocks' => $station->nbDocks
 	);
 }
 
