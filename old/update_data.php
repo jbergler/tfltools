@@ -12,3 +12,5 @@ if (!file_exists("data/livecyclehireupdates.xml") || (time() - filemtime("data/l
 if (!file_exists("data/tube.xml") || (time() - filemtime("data/tube.xml")) > 60) {
 	file_put_contents("data/tube.xml", file_get_contents("http://cloud.tfl.gov.uk/TrackerNet/LineStatus"));
 }
+
+//https://nextbike.net/maps/nextbike-official.xml
